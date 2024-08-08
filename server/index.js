@@ -35,10 +35,6 @@ app.use(express.json())
 morgan.token("body", request => JSON.stringify(request.body))
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :body"))
 
-const generateId = () => {
-    return String(Math.round(Math.random() * 1e5))
-}
-
 app.get("/info", (request, response) => {
     response.send(`Phonebook has info for ${persons.length} people<br/>${Date()}`)
 
@@ -65,6 +61,7 @@ app.delete("/api/persons/:id", (request, response) => {
 
 app.post("/api/persons", (request, response) => {
     const body = request.body
+    console.log(body)
 
     if(persons.find((p) => p.name === body.name)) {
         return response.status(400).json({
