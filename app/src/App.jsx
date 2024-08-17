@@ -66,10 +66,15 @@ const App = () => {
           setPersons(persons.concat(response))
           setNewName("")
           setNewNumber("")
+          setNote(
+            `Added ${personObject.name}`
+          )
         })
-        setNote(
-          `Added ${personObject.name}`
-        )
+        .catch(error => {
+          setNote(
+            `${Object.values(error.response.data).flat().join()}`
+          )
+        })
         noteToNull()
     }
   }
