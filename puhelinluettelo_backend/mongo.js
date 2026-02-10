@@ -38,3 +38,5 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.etwnlux.mongodb.net/ph
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url, { family: 4 })
+
+module.exports = mongoose.model('Person', personSchema)

@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 const app = express()
 
 app.use(express.static('dist'))
@@ -11,28 +12,18 @@ morgan.token('body', request => {
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
-let persons = [
-    {
-        id: '1',
-        name: 'Arto Hellas',
-        number: '040-123456'
-    },
-    {
-        id: '2',
-        name: 'Ada Lovelace',
-        number: '39-44-5323523'
-    },
-    {
-        id: '3',
-        name: 'Dan Abramov',
-        number: '12-43-234345'
-    },
-    {
-        id: '4',
-        name: 'Mary Poppendieck',
-        number: '39-23-6423122'
-    }
-]
+const password = process.argv[2]
+const url = `mongodb+srv://fullstack:${password}@cluster0.etwnlux.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`
+
+mongoose.set('strictQuery', false)
+mongoose.connect(url, { family: 4 })
+
+const personSchema = new mongoose.Schema({
+    name: String,
+    number: String,
+})
+
+const Person = mongoose.model('Person', personSchema)
 
 const newId = () => {
     let max = persons.length
@@ -41,7 +32,10 @@ const newId = () => {
 }
 
 app.get('/api/persons/', (request, response) => {
-    response.json(persons)
+    Person.find({})
+        .then(persons => {
+            response.json(persons)
+        })
 })
 
 app.get('/info', (request, response) => {
