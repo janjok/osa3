@@ -13,12 +13,6 @@ morgan.token('body', request => {
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
-const password = process.argv[2]
-const url = `mongodb+srv://fullstack:${password}@cluster0.etwnlux.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`
-
-mongoose.set('strictQuery', false)
-mongoose.connect(url, { family: 4 })
-
 const newId = () => {
     let max = persons.length
     max += 1
