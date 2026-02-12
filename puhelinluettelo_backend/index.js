@@ -19,13 +19,6 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.etwnlux.mongodb.net/ph
 mongoose.set('strictQuery', false)
 mongoose.connect(url, { family: 4 })
 
-const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
-})
-
-const Person = mongoose.model('Person', personSchema)
-
 const newId = () => {
     let max = persons.length
     max += 1
