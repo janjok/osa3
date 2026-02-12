@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const app = express()
+const Person = require('./models/mongo')
 
 app.use(express.static('dist'))
 
